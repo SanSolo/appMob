@@ -7,9 +7,13 @@
     <!-- A short welcome message. -->
     <div class="card">
       <div class="item item-text-wrap">
-        Welcome to Citizen Engagement!
-        Please log in to use the application.
+        Ceci est une application génialissime, et ceci est l'introduction.
       </div>
+    </div>
+    <div class="row">
+      <div class="col"></div>
+      <div class="col"><img [height]="imgHeight" src="https://qph.ec.quoracdn.net/main-qimg-83d0c3a7fd2d0ff590004a0d893cbd3b"></div>
+      <div class="col"></div>
     </div>
 
     <!-- The login form that the citizen must fill. -->
@@ -35,6 +39,7 @@
         The "ng-disabled" directive is used to disable the button if the form is invalid (i.e. the first name or last name is missing).
       -->
       <button class="button button-full button-positive" ng-click="loginCtrl.logIn()" ng-disabled="loginForm.$invalid">Log in</button>
+      <button class="button button-full button-positive" ng-click="#" ng-disabled="#">Sign in</button>
     </form>
   </ion-content>
 </ion-view>

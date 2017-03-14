@@ -1,5 +1,30 @@
 <ion-view view-title="Issue details">
+
+  <ion-nav-buttons side="secondary">
+    <button type="button" ng-controller="LogoutCtrl as logoutCtrl" ng-click="logoutCtrl.logOut()" class="button">Filtre</button>
+    <button type="button" ng-controller="LogoutCtrl as logoutCtrl" ng-click="logoutCtrl.logOut()" class="button">Log Out</button>
+  </ion-nav-buttons>
+
   <ion-content>
-    <p>Hello! This is the issue creation screen.</p>
+
+    <div class="list card">
+
+  <div class="item item-body padding">
+
+  <div class="padding">
+    <img width="100%" [height]="imgHeight" src="https://i.ytimg.com/vi/Q6amwKTI9VY/maxresdefault.jpg">
+  </div>
+
+    <div class="item item-avatar">
+      <h2>Type de probleme</h2>
+      <p>Description</p>
+      <p>Creatby</p>
+      <p>Date</p>
+      <p>Pris en charge</p>
+      <p>Commentaire</p>
+    </div>
+  </div>
+
+</div>
   </ion-content>
 </ion-view>

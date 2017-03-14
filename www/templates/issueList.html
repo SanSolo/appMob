@@ -1,5 +1,35 @@
 <ion-view view-title="Issue List">
+
+  <ion-nav-buttons side="secondary">
+    <button type="button" ng-controller="LogoutCtrl as logoutCtrl" ng-click="logoutCtrl.logOut()" class="button">Filtre</button>
+    <button type="button" ng-controller="LogoutCtrl as logoutCtrl" ng-click="logoutCtrl.logOut()" class="button">Log Out</button>
+  </ion-nav-buttons>
+
   <ion-content>
-    <p>Hello! This is the issue creation screen.</p>
+    <div class="list">
+        <a class="item item-avatar" href="#">
+          <img src="http://www.monchatonetmoi.com/upload/images/539984E8D46FC.jpg">
+          <h2>Type de probleme</h2>
+          <p>Description</p>
+        </a>
+    </div>
+
+    <div class="list">
+        <a class="item item-avatar" href="#">
+          <img src="http://www.monchatonetmoi.com/upload/images/539984E8D46FC.jpg">
+          <h2>Type de probleme</h2>
+          <p>Description</p>
+        </a>
+    </div>
+
+    <div class="list">
+        <a class="item item-avatar" href="#">
+          <img src="http://www.monchatonetmoi.com/upload/images/539984E8D46FC.jpg">
+          <h2>Type de probleme</h2>
+          <p>Description</p>
+        </a>
+    </div>
+
+
   </ion-content>
 </ion-view>

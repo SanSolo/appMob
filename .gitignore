@@ -4,3 +4,6 @@
 node_modules/
 platforms/
 plugins/
+config/*
+!config/sample.json
+www/js/constants.js

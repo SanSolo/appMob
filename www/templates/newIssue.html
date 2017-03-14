@@ -1,8 +1,33 @@
 <ion-view view-title="New Issue">
+  <ion-nav-buttons side="left">
+    <button class="button button-icon icon ion-ios-arrow-left"></button>
+  </ion-nav-buttons>
   <ion-nav-buttons side="secondary">
     <button type="button" ng-controller="LogoutCtrl as logoutCtrl" ng-click="logoutCtrl.logOut()" class="button">Log Out</button>
   </ion-nav-buttons>
   <ion-content>
-    <p>Hello! This is the issue creation screen.</p>
+    <div class="list card">
+
+  <div class="item item-body newIssue">
+    <div class="button-bar row">
+      <a class="button ion-plus-circled"></a>
+      <a class="button ion-ios-camera-outline"></a>
+      <a class="button ion-image"></a>
+    </div>
+    </ion-nav-buttons>    <div class="item item-avatar">
+      <select ng-model="livre_type" ng-options="livre as (livre.titre + ' ' + livre.auteur) for livre in livres">
+        <option value="">Sélectionnez un Type de problème</option>
+      </select>
+      <p>Description</p>
+      <label class="item item-input tags">
+        <input type="text" placeholder="Tags">
+      </label>
+      <button type="button" ng-controller="LogoutCtrl as logoutCtrl" ng-click="" class="button">Suivant</button>
+
+
+    </div>
+  </div>
+
+</div>
   </ion-content>
 </ion-view>

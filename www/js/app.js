@@ -5,6 +5,10 @@
 // the 2nd parameter is an array of 'requires'
 angular.module('citizen-engagement', ['ionic', 'angular-storage', 'geolocation', 'leaflet-directive'])
 
+.config(function($logProvider) {
+     $logProvider.debugEnabled(false);
+})
+
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
     if(window.cordova && window.cordova.plugins.Keyboard) {

@@ -9,8 +9,9 @@ angular.module('citizen-engagement').controller('ListCtrl', function(AuthService
         method: 'GET',
         url: apiUrl + '/issues'
       }).then(function(res) {
-          console.log(res.data.issues);
+          console.log(res.data);
           console.log('coucou');
+          listCtrl.issues = res.data;
 
 
       });

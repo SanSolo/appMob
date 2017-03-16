@@ -10,13 +10,13 @@
     <div class="list card">
 
   <div class="item item-body padding">
-    <img width="100%" [height]="imgHeight" src="https://i.ytimg.com/vi/Q6amwKTI9VY/maxresdefault.jpg">
+    <img width="100%" [height]="imgHeight" src="{{issue.imageUrl}}">
     <div class="item item-avatar">
-      <h2>Type de probleme</h2>
-      <p>Description</p>
-      <p>Creatby</p>
-      <p>Date</p>
-      <p>Pris en charge</p>
+      <h2>{{issue.type}}</h2>
+      <p>{{issue.description}}</p>
+      <p>{{issue.creatorHref}}</p>
+      <p>Date: {{issue.createdAt}}</p>
+      <p>{{issue.state}}</p>
       <p>Commentaire</p>
     </div>
   </div>

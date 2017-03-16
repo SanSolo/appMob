@@ -5,31 +5,13 @@
     <button type="button" ng-controller="LogoutCtrl as logoutCtrl" ng-click="logoutCtrl.logOut()" class="button">Log Out</button>
   </ion-nav-buttons>
 
-  <ion-content>
-    <div class="list">
-        <a class="item item-avatar" ui-sref='tab.issueDetails({ issueId: "1" })'>
-          <img src="http://www.monchatonetmoi.com/upload/images/539984E8D46FC.jpg">
-          <h2>Type de probleme</h2>
-          <p>Description</p>
-        </a>
-    </div>
-
-    <div ng-repeat="issue in issues" class="list">
+  <ion-content>  
+    <div ng-repeat="issue in listCtrl.issues" class="list" ui-sref='tab.issueDetails({ issueId: issue.id })'>
         <a class="item item-avatar" href="">
-          <img src="http://www.monchatonetmoi.com/upload/images/539984E8D46FC.jpg">
-          <h2>Type de probleme</h2>
-          <p>Description</p>
+          <img src="{{issue.imageUrl}}">
+          <h2>{{issue.state}}</h2>
+          <p>{{issue.description}}</p>
         </a>
     </div>
-
-    <div class="list">
-        <a class="item item-avatar" href="">
-          <img src="http://www.monchatonetmoi.com/upload/images/539984E8D46FC.jpg">
-          <h2>Type de probleme</h2>
-          <p>Description</p>
-        </a>
-    </div>
-
-
   </ion-content>
 </ion-view>

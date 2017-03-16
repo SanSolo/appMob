@@ -3,7 +3,7 @@
 // angular.module is a global place for creating, registering and retrieving Angular modules
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
-angular.module('citizen-engagement', ['ionic', 'angular-storage'])
+angular.module('citizen-engagement', ['ionic', 'angular-storage', 'geolocation', 'leaflet-directive'])
 
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
@@ -56,6 +56,8 @@ angular.module('citizen-engagement').config(function($stateProvider, $urlRouterP
       url: '/issueMap',
       views: {
         'tab-issueMap': {
+          controller: 'MapCtrl',
+          controllerAs: 'mapCtrl',
           templateUrl: 'templates/issueMap.html'
         }
       }
@@ -104,7 +106,7 @@ angular.module('citizen-engagement').config(function($stateProvider, $urlRouterP
 
   // Define the default state (i.e. the first screen displayed when the app opens).
   $urlRouterProvider.otherwise(function($injector) {
-    $injector.get('$state').go('tab.newIssue'); // Go to the new issue tab by default.
+    $injector.get('$state').go('tab.issueMap'); // Go to the new issue tab by default.
   });
 });
 

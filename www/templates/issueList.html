@@ -6,7 +6,7 @@
   </ion-nav-buttons>
 
   <ion-content>
-    <div class="list">
+    <div  ng-repeat="issue in issues" class="list">
         <a class="item item-avatar" ui-sref='tab.issueDetails({ issueId: "1" })'>
           <img src="http://www.monchatonetmoi.com/upload/images/539984E8D46FC.jpg">
           <h2>Type de probleme</h2>

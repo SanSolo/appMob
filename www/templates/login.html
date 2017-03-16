@@ -32,6 +32,7 @@
 
       <!-- Display an error message here, above the submit button, if an error occurred. -->
       <p ng-if="loginCtrl.error" class="error">{{ loginCtrl.error }}</p>
+      <p ng-if="signinCtrl.error" class="error">{{ signinCtrl.error }}</p>
 
       <!--
         The submit button.
@@ -39,7 +40,10 @@
         The "ng-disabled" directive is used to disable the button if the form is invalid (i.e. the first name or last name is missing).
       -->
       <button class="button button-full button-positive" ng-click="loginCtrl.logIn()" ng-disabled="loginForm.$invalid">Log in</button>
-      <button class="button button-full button-positive" ng-click="#" ng-disabled="#">Sign in</button>
+      <a ui-sref='signin'>
+      <button class="button button-full button-positive" ng-click="signinCtrl.signIn()">Sign in</button>
+      </a>
     </form>
+
   </ion-content>
 </ion-view>

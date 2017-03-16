@@ -83,6 +83,15 @@ angular.module('citizen-engagement').config(function($stateProvider, $urlRouterP
         }
       }
     })
+
+    .state('signin', {
+      url: '/signin',
+      controller: 'LoginCtrl',
+      controllerAs:'loginCtrl',
+      templateUrl: 'templates/signin.html'
+    })
+
+
     .state('login', {
       url: '/login',
       controller: 'LoginCtrl',
@@ -90,6 +99,8 @@ angular.module('citizen-engagement').config(function($stateProvider, $urlRouterP
       templateUrl: 'templates/login.html'
     })
   ;
+
+
 
   // Define the default state (i.e. the first screen displayed when the app opens).
   $urlRouterProvider.otherwise(function($injector) {

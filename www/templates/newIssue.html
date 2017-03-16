@@ -8,6 +8,11 @@
   <ion-content>
     <div class="list card">
 
+      <div ng-controller='MapCtrl as mapCtrls'>
+        <p>Latitude: {{ mapCtrl.latitude }}</p>
+        <p>Longitude: {{ mapCtrl.longitude }}</p>
+      </div>
+
   <div class="item item-body newIssue">
     <div class="button-bar row">
       <a class="button ion-plus-circled"></a>

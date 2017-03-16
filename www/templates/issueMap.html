@@ -1,5 +1,11 @@
 <ion-view view-title="Issue Map">
-  <ion-content>
-    <p>Hello! This is the issue creation screen.</p>
+
+  <ion-content scroll='false' data-tap-disabled='true'>
+    <leaflet width='100%' height='100%'
+             defaults='mapCtrl.defaults'
+             center='mapCtrl.center'
+             markers='mapCtrl.markers'>
+    </leaflet>
   </ion-content>
+  
 </ion-view>

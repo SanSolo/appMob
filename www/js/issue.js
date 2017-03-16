@@ -11,6 +11,7 @@
 angular.module('citizen-engagement').controller('MapCtrl', function(geolocation, $log, mapboxSecret) {
   var mapCtrl = this;
 
+//dans le controller de new issue--> mettre le code suivant, mais il faut changer le nom et le center est pour centrer la carte à choisir si on le met ou pas
   geolocation.getLocation().then(function(data){
     mapCtrl.center.lat = data.coords.latitude;
     mapCtrl.center.lng = data.coords.longitude;

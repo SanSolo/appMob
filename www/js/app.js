@@ -65,7 +65,9 @@ angular.module('citizen-engagement').config(function($stateProvider, $urlRouterP
       url: '/issueList',
       views: {
         'tab-issueList': {
-          templateUrl: 'templates/issueList.html'
+          templateUrl: 'templates/issueList.html',
+          controller: 'ListCtrl',
+          controllerAs: 'listCtrl'
         }
       }
     })

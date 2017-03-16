@@ -18,21 +18,21 @@
       <div class="list">
         <label class="item item-input">
           <!-- Note the required="required" attribute used for validation. -->
-          <input type="text" placeholder="Prénom" ng-model="signinCtrl.user.firstname" required />
+          <input type="text" placeholder="Prénom" ng-model="loginCtrl.user.firstname" required />
         </label>
         <label class="item item-input">
           <!-- Note the required="required" attribute used for validation. -->
-          <input type="text" placeholder="Nom" ng-model="signinCtrl.user.lastname" required />
+          <input type="text" placeholder="Nom" ng-model="loginCtrl.user.lastname" required />
         </label>
         <label class="item item-input">
           <!-- Note the required="required" attribute used for validation. -->
-          <input type="text" placeholder="Username" ng-model="signinCtrl.user.name" required />
+          <input type="text" placeholder="Username" ng-model="loginCtrl.user.name" required />
         </label>
         <label class="item item-input">
-          <input type="password" placeholder="Password" ng-model="signinCtrl.user.password" required />
+          <input type="password" placeholder="Password" ng-model="loginCtrl.user.password" required />
         </label>
         <label class="item item-input">
-          <input type="text" placeholder="Telephone" ng-model="signinCtrl.user.phone" required />
+          <input type="text" placeholder="Telephone" ng-model="loginCtrl.user.phone" required />
         </label>
       </div>
 
@@ -44,7 +44,7 @@
         The "ng-click" directive indicates which scope function to call when the form is submitted.
         The "ng-disabled" directive is used to disable the button if the form is invalid (i.e. the first name or last name is missing).
       -->
-      <button class="button button-full button-positive" ng-click="#" ng-disabled="#">S'inscrire</button>
+      <button class="button button-full button-positive" ng-click="loginCtrl.register()" ng-disabled="signinForm.$invalid">S'inscrire</button>
     </form>
   </ion-content>
 </ion-view>

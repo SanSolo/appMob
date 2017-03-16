@@ -67,7 +67,62 @@ angular.module('citizen-engagement').controller('LoginCtrl', function(apiUrl, Au
       loginCtrl.error = 'Could not log in.';
     });
   };
+  loginCtrl.register = function () {
+
+      loginCtrl.user.roles = ['citizen'];
+      console.log(loginCtrl.user);
+      $http({
+        method: 'POST',
+        url: apiUrl + '/users',
+        data: loginCtrl.user
+      }).then(function(res) {
+
+      // Hide the loading message.
+      $ionicLoading.hide();
+
+      // Set the next view as the root of the history.
+      // Otherwise, the next screen will have a "back" arrow pointing back to the login screen.
+      $ionicHistory.nextViewOptions({
+          disableBack: true,
+          historyRoot: true
+      });
+        // Go to the login creation tab.
+        $state.go('login');
+  }).catch(function() {
+
+    // If an error occurs, hide the loading message and show an error message.
+    $ionicLoading.hide();
+    loginCtrl.error = 'Could not register';
+  });
+};
 });
+
+angular.module('citizen-engagement').controller('LogoutCtrl', function(AuthService, $state) {
+  var logoutCtrl = this;
+
+  logoutCtrl.logOut = function() {
+    AuthService.unsetAuthToken();
+    $state.go('login');
+  };
+});
+
+angular.module('citizen-engagement').factory('AuthInterceptor', function(AuthService) {
+  return {
+
+    // The request function will be called before all requests.
+    // In it, you can modify the request configuration object.
+    request: function(config) {
+
+      // If the user is logged in, add the X-User-Id header.
+      if (AuthService.authToken) {
+        config.headers.Authorization = 'Bearer ' + AuthService.authToken;
+      }
+
+      return config;
+    }
+  };
+});
+
 
 angular.module('citizen-engagement').controller('LogoutCtrl', function(AuthService, $state) {
   var logoutCtrl = this;

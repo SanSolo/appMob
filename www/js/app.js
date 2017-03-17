@@ -87,7 +87,9 @@ angular.module('citizen-engagement').config(function($stateProvider, $urlRouterP
         // Here we use the same "tab-issueList" view as the previous state.
         // This means that the issue details template will be displayed in the same tab as the issue list.
         'tab-issueList': {
-          templateUrl: 'templates/issueDetails.html'
+          templateUrl: 'templates/issueDetails.html',
+          controller: 'IssueDetailCtrl',
+          controllerAs: 'issueDetailCtrl'
         }
       }
     })

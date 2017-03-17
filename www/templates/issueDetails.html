@@ -10,13 +10,14 @@
     <div class="list card">
 
   <div class="item item-body padding">
-    <img width="100%" [height]="imgHeight" src="{{issue.imageUrl}}">
+    <img width="100%" [height]="imgHeight" src="{{issueDetailCtrl.issue.imageUrl}}">
     <div class="item item-avatar">
-      <h2>{{issue.type}}</h2>
-      <p>{{issue.description}}</p>
-      <p>{{issue.creatorHref}}</p>
-      <p>Date: {{issue.createdAt}}</p>
-      <p>{{issue.state}}</p>
+      <h2>Type: {{issueDetailCtrl.issue.issueType.name}} - {{issueDetailCtrl.issue.issueType.description}}</h2>
+      <p>Description: {{issueDetailCtrl.issue.description}}</p>
+      <p>Créateur: {{issueDetailCtrl.issue.creator.name}}</p>
+      <p>Date: {{issueDetailCtrl.issue.createdAt}}</p>
+      <p>Etat: {{issueDetailCtrl.issue.state}}</p>
+      <p>Tags: <span ng-repeat="tag in issueDetailCtrl.issue.tags">{{tag}} ,</span></p>
       <p>Commentaire</p>
     </div>
   </div>

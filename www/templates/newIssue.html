@@ -1,29 +1,40 @@
 <ion-view view-title="New Issue">
-  <ion-nav-buttons side="left">
-    <button class="button button-icon icon ion-ios-arrow-left"></button>
-  </ion-nav-buttons>
   <ion-nav-buttons side="secondary">
     <button type="button" ng-controller="LogoutCtrl as logoutCtrl" ng-click="logoutCtrl.logOut()" class="button">Log Out</button>
   </ion-nav-buttons>
   <ion-content>
     <div class="list card">
 
-      <div ng-controller='MapCtrl as mapCtrls'>
-        <p>Latitude: {{ mapCtrl.latitude }}</p>
-        <p>Longitude: {{ mapCtrl.longitude }}</p>
+      <div class="row">
+        <div class="col"></div>
+        <div class="col"><img width=100% [height]="imgHeight" src="img/logoCC.png"></div>
+        <div class="col"></div>
       </div>
 
   <div class="item item-body newIssue">
-    <div class="button-bar row">
-      <a class="button ion-plus-circled"></a>
-      <a class="button ion-ios-camera-outline"></a>
-      <a class="button ion-image"></a>
+    <div class="button-bar button-dark row">
+      <a class="button button-dark ion-plus-circled"></a>
+      <a class="button button-dark ion-camera"></a>
+      <a class="button button-dark ion-image"></a>
     </div>
     </ion-nav-buttons>    <div class="item item-avatar">
-      <select ng-model="livre_type" ng-options="livre as (livre.titre + ' ' + livre.auteur) for livre in livres">
-        <option value="">Sélectionnez un Type de problème</option>
-      </select>
-      <p>Description</p>
+      <div class="list">
+
+        <label class="item item-input item-select">
+          <div class="input-label">
+            Types:
+          </div>
+          <select>
+            <option>Type 1</option>
+            <option selected>Type 2</option>
+            <option>Type 3</option>
+          </select>
+        </label>
+
+      </div>
+      <label class="item item-input description">
+        <input type="text" placeholder="Description">
+      </label>
       <label class="item item-input tags">
         <input type="text" placeholder="Tags">
       </label>
@@ -31,6 +42,12 @@
 
 
     </div>
+  </div>
+
+
+  <div ng-controller='MapCtrl as mapCtrls'>
+    <p>Latitude: {{ mapCtrl.latitude }}</p>
+    <p>Longitude: {{ mapCtrl.longitude }}</p>
   </div>
 
 </div>

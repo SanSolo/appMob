@@ -1,0 +1,42 @@
+<ion-view view-title="Issue details">
+
+  <ion-nav-buttons side="secondary">
+    <button type="button" ng-controller="LogoutCtrl as logoutCtrl" ng-click="logoutCtrl.logOut()" class="button">Filtre</button>
+    <button type="button" ng-controller="LogoutCtrl as logoutCtrl" ng-click="logoutCtrl.logOut()" class="button">Log Out</button>
+  </ion-nav-buttons>
+
+  <ion-content>
+
+    <div class="list card">
+
+  <div class="item item-body padding">
+    <div class="item item-avatar">
+      <p>{{issueDetailCtrl.issue.comment}}</p>
+    </div>
+  </div>
+
+  <!-- The login form that the citizen must fill. -->
+  <form name="commentForm">
+
+    <!-- Ionic uses lists to group related input elements. -->
+    <div class="list">
+      <label class="item item-input">
+        <!-- Note the required="required" attribute used for validation. -->
+        <input type="text" placeholder="Votre commentaire" ng-model="" required />
+      </label>
+    </div>
+
+    <!-- Display an error message here, above the submit button, if an error occurred. -->
+    <p ng-if="signinCtrl.error" class="error">{{ signinCtrl.error }}</p>
+
+    <!--
+      The submit button.
+      The "ng-click" directive indicates which scope function to call when the form is submitted.
+      The "ng-disabled" directive is used to disable the button if the form is invalid (i.e. the first name or last name is missing).
+    -->
+    <button class="button button-full button-positive" ng-click="loginCtrl.register()" ng-disabled="signinForm.$invalid">Envoyer le commentaire</button>
+  </form>
+
+</div>
+  </ion-content>
+</ion-view>

@@ -78,6 +78,17 @@ angular.module('citizen-engagement').config(function($stateProvider, $urlRouterP
       }
     })
 
+    .state('tab.comment', {
+      url: '/comment',
+      views: {
+        'tab-issueList': {
+          templateUrl: 'templates/comment.html',
+          controller: 'ListCtrl',
+          controllerAs: 'listCtrl'
+        }
+      }
+    })
+
     // This is the issue details state.
     .state('tab.issueDetails', {
       // We use a parameterized route for this state.

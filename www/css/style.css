@@ -2,3 +2,7 @@
 .button-dark {
   font-size: 1.4em;
 }
+
+.button-darks{
+  $colors: FF530D;
+}

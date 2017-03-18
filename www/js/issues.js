@@ -28,3 +28,33 @@ angular.module('citizen-engagement').controller('IssueDetailCtrl', function ($sc
     });
   })
 });
+
+angular.module('citizen-engagement').controller('NewIssueCtrl', function ($scope, $http, apiUrl){
+  var newIssueCtrl = this;
+  $scope.$on('$ionicView.enter', function(){
+    $http({
+      method: 'GET',
+      url: apiUrl + '/issueTypes'
+    }).then(function(res){
+      newIssueCtrl.issueTypes = res.data;
+      console.log(newIssueCtrl.issueTypes);
+      console.log(newIssueCtrl.issue_type);
+      console.log(newIssueCtrl.issue);
+    });
+  });
+
+  newIssueCtrl.create = function () {
+    newIssueCtrl.issue.createdAt = Date.now();
+    newIssueCtrl.issue.issueTypeHref = '/api/issueTypes/58c55a0af2dc592bf95e5d86';
+    newIssueCtrl.issue.location.type = "Point";
+    $http({
+      method: 'POST',
+      url: apiUrl + '/issues',
+      data:newIssueCtrl.issue
+    }).then(function(res){
+
+    }).catch(function(){
+
+    });
+  };
+});

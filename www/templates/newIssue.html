@@ -8,9 +8,13 @@
   <ion-content>
     <div class="list card">
 
-      <div ng-controller='MapCtrl as mapCtrls'>
-        <p>Latitude: {{ mapCtrl.latitude }}</p>
-        <p>Longitude: {{ mapCtrl.longitude }}</p>
+      <div ng-controller='MapCtrl as mapCtrl'>
+        <label class="item item-input">
+          <input disabled="true" ng-model="newIssueCtrl.issue.location.coordinates[1]" type="text" placeholder="Latitude: {{ mapCtrl.center.lat }}" value="{{ mapCtrl.center.lat }}">
+        </label>
+        <label class="item item-input">
+          <input disabled="true" ng-model="newIssueCtrl.issue.location.coordinates[0]" type="text" placeholder="Longitude: {{ mapCtrl.center.lng }}" value="{{ mapCtrl.center.lng }}">
+        </label>
       </div>
 
   <div class="item item-body newIssue">
@@ -20,14 +24,16 @@
       <a class="button ion-image"></a>
     </div>
     </ion-nav-buttons>    <div class="item item-avatar">
-      <select ng-model="livre_type" ng-options="livre as (livre.titre + ' ' + livre.auteur) for livre in livres">
-        <option value="">Sélectionnez un Type de problème</option>
+      <select ng-model="newIssueCtrl.issue.issueType" ng-options="type as (type.description + ' - ' + type.name) for type in newIssueCtrl.issueTypes">
+        <option value="">-- please choose a type --</option>
       </select>
-      <p>Description</p>
-      <label class="item item-input tags">
-        <input type="text" placeholder="Tags">
+      <label class="item item-input">
+        <textarea ng-model="newIssueCtrl.issue.description" placeholder="Description"></textarea>
       </label>
-      <button type="button" ng-controller="LogoutCtrl as logoutCtrl" ng-click="" class="button">Suivant</button>
+      <label class="item item-input tags">
+        <input ng-model="newIssueCtrl.issue.tags" type="text" placeholder="Tags">
+      </label>
+      <button type="button" ng-click="newIssueCtrl.create()" class="button">Suivant</button>
 
 
     </div>

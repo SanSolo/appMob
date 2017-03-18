@@ -1,16 +1,39 @@
-angular.module('citizen-engagement').controller('ListCtrl', function(AuthService, $scope, $http, $state, apiUrl) {
+angular.module('citizen-engagement').factory('IssueService', function($http, apiUrl) {
+  var service = {};
+
+  //Get all issues
+  service.getIssues = function(page, items) {
+    page = page || 1; // Start from page 1
+    items = items || [];
+    // GET the current page
+    return $http({
+      method: 'GET',
+      url: apiUrl + '/issues?include=creator&include=issueType',
+      params: {
+        page: page
+      }
+    }).then(function(res) {
+      if (res.data.length) {
+        // If there are any items, add them
+        // and recursively fetch the next page
+        items = items.concat(res.data);
+        return service.getIssues(page + 1, items);
+      }
+      return items;
+    });
+  };
+
+  return service;
+
+});
+angular.module('citizen-engagement').controller('ListCtrl', function(AuthService, $scope, $http, $state, apiUrl, IssueService) {
   var listCtrl = this;
   $scope.$on('$ionicView.enter', function() {
       // Code you want executed every time view is opened
-      console.log('Opened!')
-      $http({
-        method: 'GET',
-        url: apiUrl + '/issues'
-      }).then(function(res) {
-          console.log(res.data);
-          console.log('coucou');
-          listCtrl.issues = res.data;
-      });
+      IssueService.getIssues().then(function(issues) {
+        console.log(issues);
+        listCtrl.issues = issues;
+      })
    })
 });
 
@@ -29,7 +52,7 @@ angular.module('citizen-engagement').controller('IssueDetailCtrl', function ($sc
   })
 });
 
-angular.module('citizen-engagement').controller('NewIssueCtrl', function ($scope, $http, apiUrl, geolocation, $state, $log){
+angular.module('citizen-engagement').controller('NewIssueCtrl', function ($scope, $http, apiUrl, geolocation, $state, $log, $ionicLoading){
   var newIssueCtrl = this;
   $scope.$on('$ionicView.enter', function(){
     $http({
@@ -42,14 +65,16 @@ angular.module('citizen-engagement').controller('NewIssueCtrl', function ($scope
   });
 
   newIssueCtrl.create = function () {
+    // Show a loading message if the request takes too long.
+    $ionicLoading.show({
+      template: 'Creating the issue...'
+    });
     newIssueCtrl.issue.createdAt = Date.now();
     newIssueCtrl.issue.issueTypeHref = '/api/issueTypes/58c55a0af2dc592bf95e5d86';
     var tags = newIssueCtrl.issue.tags.split(',');
     geolocation.getLocation().then(function(data){
       newIssueCtrl.latitude = data.coords.latitude;
       newIssueCtrl.longitude = data.coords.longitude;
-      console.log(newIssueCtrl.longitude);
-
       $http({
         method: 'POST',
         url: apiUrl + '/issues',
@@ -59,7 +84,7 @@ angular.module('citizen-engagement').controller('NewIssueCtrl', function ($scope
         data:  {
           "description":newIssueCtrl.issue.description,
           "tags": tags,
-          "imageUrl": "http://example.com/image.png",
+          "imageUrl": "https://comem-citizen-engagement-2017g.herokuapp.com/images/graffiti-1.jpg",
           "location": {
             "coordinates": [
               newIssueCtrl.longitude,
@@ -71,16 +96,13 @@ angular.module('citizen-engagement').controller('NewIssueCtrl', function ($scope
 
         }
       }).then(function(res){
+        $ionicLoading.hide();
         console.log(res);
         var issueCreated = res.data;
         $state.go('tab.issueDetails', {issueId: res.data.id});
-      }).catch(function(){
-
+      }).catch(function(err){
+          $log.error('Could not create the issue because ' + err.message);
       });
-
-
-
-
     }).catch(function(err) {
       $log.error('Could not get location because: ' + err.message);
     });

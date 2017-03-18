@@ -13,11 +13,11 @@
       <div class="col"></div>
     </div>
 
-    
+
     <div ng-repeat="issue in listCtrl.issues" class="list" ui-sref='tab.issueDetails({ issueId: issue.id })'>
         <a class="item item-avatar" href="">
           <img src="{{issue.imageUrl}}">
-          <h2>{{issue.state}}</h2>
+          <h2>{{issue.issueType.name}}</h2>
           <p>{{issue.description}}</p>
         </a>
     </div>

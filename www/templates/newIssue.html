@@ -6,10 +6,10 @@
     <div class="list card">
       <div ng-controller='MapCtrl as mapCtrl'>
         <label class="item item-input">
-          <input disabled="true" ng-model="newIssueCtrl.issue.location.coordinates[1]" type="text" placeholder="Latitude: {{ mapCtrl.center.lat }}" value="{{ mapCtrl.center.lat }}">
+          <input disabled="true" ng-model="newIssueCtrl.latitude" type="text" placeholder="Latitude: {{ mapCtrl.center.lat }}" value="{{ mapCtrl.center.lat }}">
         </label>
         <label class="item item-input">
-          <input disabled="true" ng-model="newIssueCtrl.issue.location.coordinates[0]" type="text" placeholder="Longitude: {{ mapCtrl.center.lng }}" value="{{ mapCtrl.center.lng }}">
+          <input disabled="true" ng-model="newIssueCtrl.longitude" type="text" placeholder="Longitude: {{ mapCtrl.center.lng }}" value="{{ mapCtrl.center.lng }}">
         </label>
       <div class="row">
         <div class="col"></div>
@@ -29,22 +29,6 @@
       </select>
       <label class="item item-input">
         <textarea ng-model="newIssueCtrl.issue.description" placeholder="Description"></textarea>
-      <div class="list">
-
-        <label class="item item-input item-select">
-          <div class="input-label">
-            Types:
-          </div>
-          <select>
-            <option>Type 1</option>
-            <option selected>Type 2</option>
-            <option>Type 3</option>
-          </select>
-        </label>
-
-      </div>
-      <label class="item item-input description">
-        <input type="text" placeholder="Description">
       </label>
       <label class="item item-input tags">
         <input ng-model="newIssueCtrl.issue.tags" type="text" placeholder="Tags">

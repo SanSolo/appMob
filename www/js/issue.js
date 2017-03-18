@@ -7,7 +7,6 @@
 //     $log.error('Could not get location because: ' + err.message);
 //   });
 // });
-
 angular.module('citizen-engagement').controller('MapCtrl', function(geolocation, $log, mapboxSecret) {
   var mapCtrl = this;
 

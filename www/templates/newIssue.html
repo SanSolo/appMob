@@ -1,13 +1,9 @@
 <ion-view view-title="New Issue">
-  <ion-nav-buttons side="left">
-    <button class="button button-icon icon ion-ios-arrow-left"></button>
-  </ion-nav-buttons>
   <ion-nav-buttons side="secondary">
     <button type="button" ng-controller="LogoutCtrl as logoutCtrl" ng-click="logoutCtrl.logOut()" class="button">Log Out</button>
   </ion-nav-buttons>
   <ion-content>
     <div class="list card">
-
       <div ng-controller='MapCtrl as mapCtrl'>
         <label class="item item-input">
           <input disabled="true" ng-model="newIssueCtrl.issue.location.coordinates[1]" type="text" placeholder="Latitude: {{ mapCtrl.center.lat }}" value="{{ mapCtrl.center.lat }}">
@@ -15,13 +11,17 @@
         <label class="item item-input">
           <input disabled="true" ng-model="newIssueCtrl.issue.location.coordinates[0]" type="text" placeholder="Longitude: {{ mapCtrl.center.lng }}" value="{{ mapCtrl.center.lng }}">
         </label>
+      <div class="row">
+        <div class="col"></div>
+        <div class="col"><img width=100% [height]="imgHeight" src="img/logoCC.png"></div>
+        <div class="col"></div>
       </div>
 
   <div class="item item-body newIssue">
-    <div class="button-bar row">
-      <a class="button ion-plus-circled"></a>
-      <a class="button ion-ios-camera-outline"></a>
-      <a class="button ion-image"></a>
+    <div class="button-bar button-dark row">
+      <a class="button button-dark ion-plus-circled"></a>
+      <a class="button button-dark ion-camera"></a>
+      <a class="button button-dark ion-image"></a>
     </div>
     </ion-nav-buttons>    <div class="item item-avatar">
       <select ng-model="newIssueCtrl.issue.issueType" ng-options="type as (type.description + ' - ' + type.name) for type in newIssueCtrl.issueTypes">
@@ -29,6 +29,22 @@
       </select>
       <label class="item item-input">
         <textarea ng-model="newIssueCtrl.issue.description" placeholder="Description"></textarea>
+      <div class="list">
+
+        <label class="item item-input item-select">
+          <div class="input-label">
+            Types:
+          </div>
+          <select>
+            <option>Type 1</option>
+            <option selected>Type 2</option>
+            <option>Type 3</option>
+          </select>
+        </label>
+
+      </div>
+      <label class="item item-input description">
+        <input type="text" placeholder="Description">
       </label>
       <label class="item item-input tags">
         <input ng-model="newIssueCtrl.issue.tags" type="text" placeholder="Tags">
@@ -38,7 +54,6 @@
 
     </div>
   </div>
-
 </div>
   </ion-content>
 </ion-view>

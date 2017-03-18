@@ -1,19 +1,3 @@
-angular.module('citizen-engagement').factory('AuthService', function() {
-
-  var service = {
-    authToken: null,
-
-    setAuthToken: function(token) {
-      service.authToken = token;
-    },
-
-    unsetAuthToken: function() {
-      service.authToken = null;
-    }
-  };
-
-  return service;
-});
 
 angular.module('citizen-engagement').controller('LoginCtrl', function(apiUrl, AuthService, $http, $ionicHistory, $ionicLoading, $scope, $state) {
   var loginCtrl = this;
@@ -130,22 +114,5 @@ angular.module('citizen-engagement').controller('LogoutCtrl', function(AuthServi
   logoutCtrl.logOut = function() {
     AuthService.unsetAuthToken();
     $state.go('login');
-  };
-});
-
-angular.module('citizen-engagement').factory('AuthInterceptor', function(AuthService) {
-  return {
-
-    // The request function will be called before all requests.
-    // In it, you can modify the request configuration object.
-    request: function(config) {
-
-      // If the user is logged in, add the X-User-Id header.
-      if (AuthService.authToken) {
-        config.headers.Authorization = 'Bearer ' + AuthService.authToken;
-      }
-
-      return config;
-    }
   };
 });

@@ -1,1 +1,8 @@
 /* Empty. Add your own CSS if you like */
+.button-dark {
+  font-size: 1.4em;
+}
+
+.button-darks{
+  $colors: FF530D;
+}

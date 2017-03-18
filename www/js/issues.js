@@ -1,3 +1,25 @@
+angular.module('citizen-engagement').factory('CameraService', function($q) {
+  var service = {
+    isSupported: function() {
+      return navigator.camera !== undefined;
+    },
+    getPicture: function() {
+      var deferred = $q.defer();
+      var options = { // Return the raw base64 PNG data
+        destinationType: navigator.camera.DestinationType.DATA_URL,
+        correctOrientation: true
+      };
+      navigator.camera.getPicture(function(result) {
+        deferred.resolve(result);
+      }, function(err) {
+        deferred.reject(err);
+      }, options);
+      return deferred.promise;
+    }
+  };
+  return service;
+});
+
 angular.module('citizen-engagement').factory('IssueService', function($http, apiUrl) {
   var service = {};
 
@@ -52,7 +74,7 @@ angular.module('citizen-engagement').controller('IssueDetailCtrl', function ($sc
   })
 });
 
-angular.module('citizen-engagement').controller('NewIssueCtrl', function ($scope, $http, apiUrl, geolocation, $state, $log, $ionicLoading){
+angular.module('citizen-engagement').controller('NewIssueCtrl', function ($scope, $http, apiUrl, geolocation, $state, $log, $ionicLoading, CameraService){
   var newIssueCtrl = this;
   $scope.$on('$ionicView.enter', function(){
     $http({
@@ -63,6 +85,21 @@ angular.module('citizen-engagement').controller('NewIssueCtrl', function ($scope
       console.log(newIssueCtrl.issueTypes);
     });
   });
+
+  newIssueCtrl.takePicture = function() {
+    var isOK = CameraService.isSupported();
+    if (isOK == true) {
+      CameraService.getPicture().then(function(result) {
+        $log.debug('Picture taken!');
+        myCtrl.pictureData = result;
+      }).catch(function(err) {
+        $log.error('Could not get picture because: ' + err.message);
+      });
+    }
+    else {
+      $log.error('Your device has no camera');
+    }
+  };
 
   newIssueCtrl.create = function () {
     // Show a loading message if the request takes too long.

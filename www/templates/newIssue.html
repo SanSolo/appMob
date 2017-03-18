@@ -19,10 +19,12 @@
 
   <div class="item item-body newIssue">
     <div class="button-bar button-dark row">
-      <a class="button button-dark ion-plus-circled"></a>
+      <a class="button button-dark ion-plus-circled"ng-click='newIssueCtrl.takePicture()'></a>
       <a class="button button-dark ion-camera"></a>
       <a class="button button-dark ion-image"></a>
     </div>
+    <img ng-if='newIssueCtrl.pictureData' width='100%'
+     ng-src='data:image/png;base64,{{ newIssueCtrl.pictureData }}' />
     </ion-nav-buttons>    <div class="item item-avatar">
       <select ng-model="newIssueCtrl.issue.issueType" ng-options="type as (type.description + ' - ' + type.name) for type in newIssueCtrl.issueTypes">
         <option value="">-- please choose a type --</option>

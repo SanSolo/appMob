@@ -81,12 +81,12 @@ angular.module('citizen-engagement').config(function($stateProvider, $urlRouterP
     })
 
     .state('tab.comment', {
-      url: '/comment',
+      url: '/issueDetails/:issueId/comments',
       views: {
         'tab-issueList': {
           templateUrl: 'templates/comment.html',
-          controller: 'ListCtrl',
-          controllerAs: 'listCtrl'
+          controller: 'CommentsCtrl',
+          controllerAs: 'commentsCtrl'
         }
       }
     })

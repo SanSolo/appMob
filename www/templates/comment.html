@@ -9,9 +9,10 @@
 
     <div class="list card">
 
-  <div class="item item-body padding">
+  <div ng-repeat="comment in commentsCtrl.comments" class="item item-body padding">
     <div class="item item-avatar">
-      <p>{{issueDetailCtrl.issue.comment}}</p>
+      <p>{{comment.author.name}} <br /> {{ comment.createdAt | date :'EEE dd.MM.yyyy'}}</p>
+      <p>{{comment.text}}</p>
     </div>
   </div>
 
@@ -22,7 +23,7 @@
     <div class="list">
       <label class="item item-input">
         <!-- Note the required="required" attribute used for validation. -->
-        <input type="text" placeholder="Votre commentaire" ng-model="" required />
+        <input type="text" placeholder="Votre commentaire"  required />
       </label>
     </div>
 

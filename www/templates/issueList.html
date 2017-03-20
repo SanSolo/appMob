@@ -6,18 +6,22 @@
   </ion-nav-buttons>
 
   <ion-content>
-
     <div class="row">
       <div class="col"></div>
       <div class="col"><img width=100% [height]="imgHeight" src="img/logoCC.png"></div>
       <div class="col"></div>
     </div>
-
-
-    <div ng-repeat="issue in listCtrl.issues" class="list" ui-sref='tab.issueDetails({ issueId: issue.id })'>
+    <div class="list list-inset">
+      <label class="item item-input">
+        <i class="icon ion-search placeholder-icon"></i>
+        <input type="text" placeholder="Search" ng-model="searchText">
+      </label>
+    </div>
+    <div ng-repeat="issue in listCtrl.issues | filter:searchText" class="list" ui-sref='tab.issueDetails({ issueId: issue.id })'>
         <a class="item item-avatar" href="">
           <img src="{{issue.imageUrl}}">
           <h2>{{issue.issueType.name}}</h2>
+          <h4>{{issue.state}}</h4>
           <p>{{issue.description}}</p>
         </a>
     </div>

@@ -7,7 +7,7 @@
 //     $log.error('Could not get location because: ' + err.message);
 //   });
 // });
-angular.module('citizen-engagement').controller('MapCtrl', function(geolocation, $log, mapboxSecret) {
+angular.module('citizen-engagement').controller('MapCtrl', function(geolocation, $log, mapboxSecret, IssueService) {
   var mapCtrl = this;
 
 //dans le controller de new issue--> mettre le code suivant, mais il faut changer le nom et le center est pour centrer la carte à choisir si on le met ou pas
@@ -21,6 +21,20 @@ angular.module('citizen-engagement').controller('MapCtrl', function(geolocation,
       lng: data.coords.longitude
     });
 
+    IssueService.getIssues().then(function(issues){
+      createMarkers(issues);
+    })
+    function createMarkers (issues) {
+        console.log(issues);
+        for(var i=0; i<issues.length; i++){
+          mapCtrl.markers.push({
+            lat: issues[i].location.coordinates[1],
+            lng: issues[i].location.coordinates[0],
+            issue: issues[i],
+            message: '<p>'+ issues[i].issueType.name + '</p><p> ' + issues[i].issueType.description +'</p>'
+          });
+        }
+      }
 
   }).catch(function(err) {
     $log.error('Could not get location because: ' + err.message);

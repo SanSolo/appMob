@@ -74,7 +74,7 @@ angular.module('citizen-engagement').controller('IssueDetailCtrl', function ($sc
   })
 });
 
-angular.module('citizen-engagement').controller('NewIssueCtrl', function ($scope, $http, apiUrl, geolocation, $state, $log, $ionicLoading, CameraService){
+angular.module('citizen-engagement').controller('NewIssueCtrl', function ($ionicPopup, $scope, $http, apiUrl, geolocation, $state, $log, $ionicLoading, CameraService){
   var newIssueCtrl = this;
   $scope.$on('$ionicView.enter', function(){
     $http({
@@ -91,13 +91,16 @@ angular.module('citizen-engagement').controller('NewIssueCtrl', function ($scope
     if (isOK == true) {
       CameraService.getPicture().then(function(result) {
         $log.debug('Picture taken!');
-        myCtrl.pictureData = result;
+        return newIssueCtrl.pictureData = result;
       }).catch(function(err) {
         $log.error('Could not get picture because: ' + err.message);
       });
     }
     else {
-      $log.error('Your device has no camera');
+      return $ionicPopup.alert({
+        title: 'Not supported',
+        template: 'You cannot use the camera on this platform'
+      });
     }
   };
 

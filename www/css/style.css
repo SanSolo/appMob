@@ -4,5 +4,14 @@
 }
 
 .button-darks{
-  $colors: FF530D;
+  colors: FF530D;
+}
+
+.descriptionNewIssue{
+height: 150px;
+overflow-y : scroll;
+}
+
+.descriptionIssue{
+  font-weight: bold;
 }

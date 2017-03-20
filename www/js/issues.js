@@ -74,8 +74,9 @@ angular.module('citizen-engagement').controller('IssueDetailCtrl', function ($sc
   })
 });
 
-angular.module('citizen-engagement').controller('NewIssueCtrl', function ($ionicPopup, $scope, $http, apiUrl, geolocation, $state, $log, $ionicLoading, CameraService){
+angular.module('citizen-engagement').controller('NewIssueCtrl', function (qimgUrl, qimgSecret, $q, $ionicPopup, $scope, $http, apiUrl, geolocation, $state, $log, $ionicLoading, CameraService){
   var newIssueCtrl = this;
+  newIssueCtrl.messages = [];
   $scope.$on('$ionicView.enter', function(){
     $http({
       method: 'GET',
@@ -105,47 +106,78 @@ angular.module('citizen-engagement').controller('NewIssueCtrl', function ($ionic
   };
 
   newIssueCtrl.create = function () {
-    // Show a loading message if the request takes too long.
-    $ionicLoading.show({
-      template: 'Creating the issue...'
-    });
-    newIssueCtrl.issue.createdAt = Date.now();
-    newIssueCtrl.issue.issueTypeHref = '/api/issueTypes/58c55a0af2dc592bf95e5d86';
-    var tags = newIssueCtrl.issue.tags.split(',');
-    geolocation.getLocation().then(function(data){
-      newIssueCtrl.latitude = data.coords.latitude;
-      newIssueCtrl.longitude = data.coords.longitude;
-      $http({
-        method: 'POST',
-        url: apiUrl + '/issues',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        data:  {
-          "description":newIssueCtrl.issue.description,
-          "tags": tags,
-          "imageUrl": "https://comem-citizen-engagement-2017g.herokuapp.com/images/graffiti-1.jpg",
-          "location": {
-            "coordinates": [
-              newIssueCtrl.longitude,
-              newIssueCtrl.latitude,
-            ],
-            "type": "Point"
-          },
-          "issueTypeHref": newIssueCtrl.issue.issueType.href
+    return $q.when().then(postImage).then(postIssue).catch(function(err) {
 
-        }
-      }).then(function(res){
-        $ionicLoading.hide();
-        console.log(res);
-        var issueCreated = res.data;
-        $state.go('tab.issueDetails', {issueId: res.data.id});
-      }).catch(function(err){
-          $log.error('Could not create the issue because ' + err.message);
-      });
-    }).catch(function(err) {
-      $log.error('Could not get location because: ' + err.message);
     });
-
+    console.log(postIssue);
   };
+  function postImage() {
+    if (!newIssueCtrl.pictureData) {
+    newIssueCtrl.messages.push("No picture");
+      // If no image was taken, return a promise resolved with "null"
+      return $q.when(null);
+    }
+    newIssueCtrl.messages.push("Picture found");
+    // Upload the image to the qimg API
+    return $http({
+      method: 'POST',
+      url: qimgUrl + '/images',
+      headers: {
+        Authorization: 'Bearer ' + qimgSecret
+      },
+      data: {
+        data: newIssueCtrl.pictureData
+      }
+    });
+  }
+  function postIssue(imageRes) {
+
+   // Use the image URL from the qimg API response (if any)
+   if (imageRes) {
+     newIssueCtrl.issue.imageUrl = imageRes.data.url;
+   }
+   else{
+     newIssueCtrl.issue.imageUrl = "http://souelni.ma/wp-content/themes/qaengine%206/img/default-thumbnail.jpg";
+   }
+   
+   // Create the issue
+   var tags = newIssueCtrl.issue.tags.split(',');
+   return geolocation.getLocation().then(function(data){
+    newIssueCtrl.latitude = data.coords.latitude;
+    newIssueCtrl.longitude = data.coords.longitude;
+    return $http({
+      method: 'POST',
+      url: apiUrl + '/issues',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      data:  {
+        "description":newIssueCtrl.issue.description,
+        "tags": tags,
+        "imageUrl": newIssueCtrl.issue.imageUrl,
+        "location": {
+          "coordinates": [
+            newIssueCtrl.longitude,
+            newIssueCtrl.latitude,
+          ],
+          "type": "Point"
+        },
+        "issueTypeHref": newIssueCtrl.issue.issueType.href
+
+      }
+    }).then(function(res){
+      $ionicLoading.hide();
+      console.log(res);
+      var issueCreated = res.data;
+      $state.go('tab.issueDetails', {issueId: res.data.id});
+    }).catch(function(err){
+        $log.error('Could not create the issue because ' + err.message);
+        throw err;
+    });
+  }).catch(function(err) {
+    $log.error('Could not get location because: ' + err.message);
+    throw err;
+  });
+
+ }
 });

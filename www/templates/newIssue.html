@@ -3,6 +3,9 @@
     <button type="button" ng-controller="LogoutCtrl as logoutCtrl" ng-click="logoutCtrl.logOut()" class="button">Log Out</button>
   </ion-nav-buttons>
   <ion-content>
+    <ul>
+      <li ng-repeat='message in newIssueCtrl.messages'>{{ message }}</li>
+    </ul>
     <div class="list card">
       <div ng-controller='MapCtrl as mapCtrl'>
         <label class="item item-input">

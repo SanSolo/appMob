@@ -61,6 +61,8 @@ function saveConfig(environment) {
     // Replace all occurrences of @apiUrl@.
     .pipe(replace(/@apiUrl@/g, config.apiUrl))
     .pipe(replace(/@mapboxSecret@/g, config.mapboxSecret))
+    .pipe(replace(/@qimgUrl@/g, config.qimgUrl))
+    .pipe(replace(/@qimgSecret@/g, config.qimgSecret))
 
     // Save the result in www/js.
     .pipe(gulp.dest('www/js'));

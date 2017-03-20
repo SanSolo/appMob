@@ -98,7 +98,7 @@ angular.module('citizen-engagement').factory('AuthInterceptor', function(AuthSer
     request: function(config) {
 
       // If the user is logged in, add the X-User-Id header.
-      if (AuthService.authToken) {
+      if (AuthService.authToken && !config.headers.Authorization) {
         config.headers.Authorization = 'Bearer ' + AuthService.authToken;
       }
 

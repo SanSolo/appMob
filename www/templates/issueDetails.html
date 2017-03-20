@@ -17,7 +17,7 @@
       <p>Créateur: {{issueDetailCtrl.issue.creator.name}}</p>
       <p>Date: {{issueDetailCtrl.issue.createdAt}}</p>
       <p>Etat: {{issueDetailCtrl.issue.state}}</p>
-      <p>Tags: <span ng-repeat="tag in issueDetailCtrl.issue.tags">{{tag}} ,</span></p>
+      <p>Tags: <span ng-repeat="tag in issueDetailCtrl.issue.tags"><span class=tags>{{tag}}</span> ,</span></p>
       <p><a ui-sref='tab.comment({ issueId: issueDetailCtrl.issue.id })'>Voir les commentaires</a></p>
     </div>
   </div>

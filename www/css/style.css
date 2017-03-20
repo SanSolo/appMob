@@ -6,3 +6,12 @@
 .button-darks{
   $colors: FF530D;
 }
+
+.tags{
+  background-color: #f15a24;
+  color: white;
+  border-radius: 0.6em;
+  padding: 4px 6px;
+  margin-left: 4px;
+  box-shadow: 2px 2px 1px #b4b4b4;
+}

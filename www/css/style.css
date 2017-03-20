@@ -21,6 +21,6 @@ overflow-y : scroll;
   color: white;
   border-radius: 0.6em;
   padding: 4px 6px;
-  margin-left: 4px;
+  margin: 10px 0 0 4px;
   box-shadow: 2px 2px 1px #b4b4b4;
 }

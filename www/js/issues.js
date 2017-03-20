@@ -23,26 +23,29 @@ angular.module('citizen-engagement').factory('CameraService', function($q) {
 angular.module('citizen-engagement').factory('IssueService', function($http, apiUrl) {
   var service = {};
 
-  //Get all issues
-  service.getIssues = function(page, items) {
+  service.retrieveIssuesPage = function(page, state, search, nbItems) {
     page = page || 1; // Start from page 1
-    items = items || [];
-    // GET the current page
+
+    var requestData = {};
+
+    if (state) {
+      requestData.state = state;
+    }
+    if (search) {
+      requestData.description = {$regex:search};
+      //requestData.state = {$in:search}
+    }
+
+  // GET the current page
     return $http({
-      method: 'GET',
-      url: apiUrl + '/issues?include=creator&include=issueType',
+      method: 'POST',
+      url: apiUrl + '/issues/searches?include=creator&include=issueType',
       params: {
-        page: page
-      }
-    }).then(function(res) {
-      if (res.data.length) {
-        // If there are any items, add them
-        // and recursively fetch the next page
-        items = items.concat(res.data);
-        return service.getIssues(page + 1, items);
-      }
-      return items;
-    });
+        page: page,
+        pageSize: nbItems
+      },
+      data: requestData
+    })
   };
 
   return service;
@@ -50,12 +53,24 @@ angular.module('citizen-engagement').factory('IssueService', function($http, api
 });
 angular.module('citizen-engagement').controller('ListCtrl', function(AuthService, $scope, $http, $state, apiUrl, IssueService) {
   var listCtrl = this;
+  var page = 1;
+  listCtrl.issues = [];
+  listCtrl.showMore = function() {
+    page = page + 1;
+    IssueService.retrieveIssuesPage(page,listCtrl.state,listCtrl.search, listCtrl.nbItems).then(function(res) {
+      listCtrl.issues = listCtrl.issues.concat(res.data);
+    });
+  }
+  listCtrl.listFilter = function(){
+      listCtrl.issues = [];
+      page = 0;
+      console.log(listCtrl.state);
+      listCtrl.showMore();
+  }
   $scope.$on('$ionicView.enter', function() {
-      // Code you want executed every time view is opened
-      IssueService.getIssues().then(function(issues) {
-        console.log(issues);
-        listCtrl.issues = issues;
-      })
+      IssueService.retrieveIssuesPage(page,listCtrl.state,listCtrl.search).then(function(res) {
+        listCtrl.issues = listCtrl.issues.concat(res.data);
+      });
    })
 });
 
@@ -139,7 +154,7 @@ angular.module('citizen-engagement').controller('NewIssueCtrl', function (qimgUr
    else{
      newIssueCtrl.issue.imageUrl = "http://souelni.ma/wp-content/themes/qaengine%206/img/default-thumbnail.jpg";
    }
-   
+
    // Create the issue
    var tags = newIssueCtrl.issue.tags.split(',');
    return geolocation.getLocation().then(function(data){

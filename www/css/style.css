@@ -4,5 +4,23 @@
 }
 
 .button-darks{
-  $colors: FF530D;
+  colors: FF530D;
+}
+
+.descriptionNewIssue{
+height: 150px;
+overflow-y : scroll;
+}
+
+.descriptionIssue{
+  font-weight: bold;
+}
+
+.tagsIssue{
+  background-color: #f15a24;
+  color: white;
+  border-radius: 0.6em;
+  padding: 4px 6px;
+  margin-left: 4px;
+  box-shadow: 2px 2px 1px #b4b4b4;
 }

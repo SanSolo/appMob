@@ -48,11 +48,17 @@ angular.module('citizen-engagement').factory('IssueService', function($http, api
     })
   };
 
-  service.retriveIssuesLocation = function (location){
+  service.retriveIssuesLocation = function (location, radius){
     console.log(location);
+    var page =1;
+    var pageSize = 50;
     return $http({
       method: 'POST',
       url: apiUrl + '/issues/searches?include=creator&include=issueType',
+      params: {
+        page: page,
+        pageSize: pageSize
+      },
       headers: {
         'Content-Type': 'application/json'
       },
@@ -61,12 +67,12 @@ angular.module('citizen-engagement').factory('IssueService', function($http, api
             "$geoWithin": {
             "$centerSphere" : [
               [ location.lng , location.lat],
-              location.zoom
+              radius
             ]
           }
         }
       }
-    })
+    });
   };
 
   return service;

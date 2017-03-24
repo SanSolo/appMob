@@ -27,10 +27,15 @@
     </div>
     </ion-nav-buttons>
 
-    <div class="item item-avatar item-input item-select">
-      <select ng-model="newIssueCtrl.issue.issueType" ng-options="type as (type.description + ' - ' + type.name) for type in newIssueCtrl.issueTypes">
-        <option value="">-- Merci de choisir le type --</option>
-      </select>
+    <div>
+      <label class="item item-input item-select">
+    <div class="input-label">
+      Choisissez un type pour classer votre issue
+    </div>
+    <select ng-model="newIssueCtrl.issue.issueType" ng-options="type as (type.description + ' - ' + type.name) for type in newIssueCtrl.issueTypes">
+      <option selected value="">-- Merci de choisir le type --</option>
+    </select>
+  </label>
     </div>
 
       <label class="item item-input">

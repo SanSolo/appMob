@@ -124,7 +124,6 @@ angular.module('citizen-engagement').config(function($stateProvider, $urlRouterP
 
     })
 
-
     .state('signin', {
       url: '/signin',
       controller: 'LoginCtrl',

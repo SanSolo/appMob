@@ -101,7 +101,7 @@ angular.module('citizen-engagement').controller('ListCtrl', function(AuthService
    })
 });
 
-angular.module('citizen-engagement').controller('IssueDetailCtrl', function ($scope, $http, apiUrl, $stateParams, CommentsService) {
+angular.module('citizen-engagement').controller('IssueDetailCtrl', function ($scope, $state, $http, apiUrl, $stateParams, CommentsService) {
   var issueDetailCtrl = this;
 
   $scope.$on('$ionicView.enter', function(){
@@ -154,6 +154,9 @@ angular.module('citizen-engagement').controller('NewIssueCtrl', function (qimgUr
     console.log(postIssue);
   };
   function postImage() {
+    $ionicLoading.show({
+      template: 'Creating issue...',
+    });
     if (!newIssueCtrl.pictureData) {
     newIssueCtrl.messages.push("No picture");
       // If no image was taken, return a promise resolved with "null"
@@ -173,7 +176,6 @@ angular.module('citizen-engagement').controller('NewIssueCtrl', function (qimgUr
     });
   }
   function postIssue(imageRes) {
-
    // Use the image URL from the qimg API response (if any)
    if (imageRes) {
      newIssueCtrl.issue.imageUrl = imageRes.data.url;
@@ -211,7 +213,7 @@ angular.module('citizen-engagement').controller('NewIssueCtrl', function (qimgUr
       $ionicLoading.hide();
       console.log(res);
       var issueCreated = res.data;
-      $state.go('tab.issueDetails', {issueId: res.data.id});
+      $state.go('tab.issueList');
     }).catch(function(err){
         $log.error('Could not create the issue because ' + err.message);
         throw err;

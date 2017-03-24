@@ -51,8 +51,8 @@ angular.module('citizen-engagement').controller('CommentsCtrl', function(AuthSer
    commentsCtrl.showMore = function (){
      page = page + 1;
      CommentsService.getComments($stateParams.issueId, page).then(function(comments){
-       console.log(comments);
-       commentsCtrl.comments = commentsCtrl.comments.concat(comments);
+       console.log(comments.data);
+       commentsCtrl.comments = commentsCtrl.comments.concat(comments.data);
      })
    }
 

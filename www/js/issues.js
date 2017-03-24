@@ -48,6 +48,27 @@ angular.module('citizen-engagement').factory('IssueService', function($http, api
     })
   };
 
+  service.retriveIssuesLocation = function (location){
+    console.log(location);
+    return $http({
+      method: 'POST',
+      url: apiUrl + '/issues/searches?include=creator&include=issueType',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      data: {
+        "location": {
+            "$geoWithin": {
+            "$centerSphere" : [
+              [ location.lng , location.lat],
+              location.zoom
+            ]
+          }
+        }
+      }
+    })
+  };
+
   return service;
 
 });
@@ -74,7 +95,7 @@ angular.module('citizen-engagement').controller('ListCtrl', function(AuthService
    })
 });
 
-angular.module('citizen-engagement').controller('IssueDetailCtrl', function ($scope, $http, apiUrl, $stateParams) {
+angular.module('citizen-engagement').controller('IssueDetailCtrl', function ($scope, $http, apiUrl, $stateParams, CommentsService) {
   var issueDetailCtrl = this;
 
   $scope.$on('$ionicView.enter', function(){

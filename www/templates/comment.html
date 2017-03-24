@@ -6,7 +6,7 @@
   </ion-nav-buttons>
 
   <ion-content>
-
+    <h4>Commentaires <span class="badge badge-positive">{{commentsCtrl.nbComments}}</span></h4>
     <div class="list card">
 
   <div ng-repeat="comment in commentsCtrl.comments" class="item item-body padding">
@@ -16,17 +16,6 @@
     </div>
   </div>
 
-  <!-- The login form that the citizen must fill. -->
-  <form name="commentForm">
-
-    <!-- Ionic uses lists to group related input elements. -->
-    <div class="list">
-      <label class="item item-input">
-        <!-- Note the required="required" attribute used for validation. -->
-        <input type="text" placeholder="Votre commentaire"  required />
-      </label>
-    </div>
-
     <!-- Display an error message here, above the submit button, if an error occurred. -->
     <p ng-if="signinCtrl.error" class="error">{{ signinCtrl.error }}</p>
 
@@ -35,9 +24,21 @@
       The "ng-click" directive indicates which scope function to call when the form is submitted.
       The "ng-disabled" directive is used to disable the button if the form is invalid (i.e. the first name or last name is missing).
     -->
-    <button class="button button-full button-positive" ng-click="loginCtrl.register()" ng-disabled="signinForm.$invalid">Envoyer le commentaire</button>
+    <div class="card">
+    <form name="addCommentForm">
+    <div class="list">
+      <label class="item item-input item-stacked-label">
+        <span class="input-label">Poster un commentaire</span>
+          <textarea placeholder="Comments" ng-model="commentsCtrl.text" required ></textarea>
+      </label>
+      <button class="button button-full button-positive" ng-click="commentsCtrl.create()" ng-disabled="addCommentForm.$invalid">Commenter</button>
+    </div>
   </form>
+  </div>
 
 </div>
+<button class="button button-full button-positive" ng-click="commentsCtrl.showMore()">
+  Show More
+</button>
   </ion-content>
 </ion-view>

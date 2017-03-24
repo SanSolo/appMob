@@ -17,11 +17,8 @@ angular.module('citizen-engagement').controller('MapCtrl', function(geolocation,
     mapCtrl.icones = {
     iconUrl: '../img/marker-person.png',
     iconSize:     [45, 45],
-    shadowSize:   [50, 64],
-    iconAnchor:   [22.5, 5],
-    shadowAnchor: [4, 62]
+    iconAnchor:   [22.5, 5]
   }
-console.log (mapCtrl.icones.person);
 
     mapCtrl.markers.push({
       lat: data.coords.latitude,
@@ -106,7 +103,8 @@ mapboxTileLayerUrl = mapboxTileLayerUrl + '?access_token=' + mapboxAccessToken;
       }
     }
   $scope.$on('leafletDirectiveMarker.click', function(event, marker) {
-    console.log(marker.model.issue);
-    $state.go('tab.issueDetailsMap', {issueId: marker.model.issue.id});
+    if(marker.model.issue){
+      $state.go('tab.issueDetailsMap', {issueId: marker.model.issue.id});
+    }
   });
 });

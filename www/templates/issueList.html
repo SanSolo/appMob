@@ -43,7 +43,7 @@
           <img src="{{issue.imageUrl}}">
           <h2>{{issue.issueType.name}}</h2>
           <h4>
-            <span class="badge badge-positive" ng-if="issue.state == 'new'">{{issue.state}}</span>
+            <span class="badge badge-dark" ng-if="issue.state == 'new'">{{issue.state}}</span>
             <span class="badge badge-assertive" ng-if="issue.state == 'rejected'">{{issue.state}}</span>
             <span class="badge badge-royal" ng-if="issue.state == 'inProgress'">{{issue.state}}</span>
             <span class="badge badge-balanced" ng-if="issue.state == 'resolved'">{{issue.state}}</span>

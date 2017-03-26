@@ -32,6 +32,11 @@
 
       <!-- Display an error message here, above the submit button, if an error occurred. -->
       <p ng-if="loginCtrl.error" class="error">{{ loginCtrl.error }}</p>
+      <div ng-if="loginCtrl.message" class="card cardSuccess">
+        <div class="item item-text-wrap">
+          <p class="message">{{ loginCtrl.message }}</p>
+        </div>
+      </div>
       <p ng-if="signinCtrl.error" class="error">{{ signinCtrl.error }}</p>
 
       <!--

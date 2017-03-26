@@ -1,5 +1,5 @@
 
-angular.module('citizen-engagement').controller('LoginCtrl', function(apiUrl, AuthService, $http, $ionicHistory, $ionicLoading, $scope, $state) {
+angular.module('citizen-engagement').controller('LoginCtrl', function(apiUrl, MessageService, AuthService, $http, $ionicHistory, $ionicLoading, $scope, $state) {
   var loginCtrl = this;
 
   // The $ionicView.beforeEnter event happens every time the screen is displayed.
@@ -7,6 +7,9 @@ angular.module('citizen-engagement').controller('LoginCtrl', function(apiUrl, Au
     // Re-initialize the user object every time the screen is displayed.
     // The first name and last name will be automatically filled from the form thanks to AngularJS's two-way binding.
     loginCtrl.user = {};
+    if(MessageService.msg){
+      loginCtrl.message = MessageService.msg;
+    }
   });
 
   // Add the register function to the scope.
@@ -71,6 +74,7 @@ angular.module('citizen-engagement').controller('LoginCtrl', function(apiUrl, Au
           historyRoot: true
       });
         // Go to the login creation tab.
+        MessageService.transferMsg('Compte créé. Vous pouvez vous connecter avec les identifiants renseignés');
         $state.go('login');
   }).catch(function() {
 
@@ -81,14 +85,6 @@ angular.module('citizen-engagement').controller('LoginCtrl', function(apiUrl, Au
 };
 });
 
-angular.module('citizen-engagement').controller('LogoutCtrl', function(AuthService, $state) {
-  var logoutCtrl = this;
-
-  logoutCtrl.logOut = function() {
-    AuthService.unsetAuthToken();
-    $state.go('login');
-  };
-});
 
 angular.module('citizen-engagement').factory('AuthInterceptor', function(AuthService) {
   return {

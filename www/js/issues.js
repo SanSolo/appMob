@@ -25,7 +25,7 @@ angular.module('citizen-engagement').factory('IssueService', function($http, api
 
   service.retrieveIssuesPage = function(page, state, search, nbItems) {
     page = page || 1; // Start from page 1
-
+    nbItems = nbItems || 20;
     var requestData = {};
 
     if (state) {
@@ -42,7 +42,8 @@ angular.module('citizen-engagement').factory('IssueService', function($http, api
       url: apiUrl + '/issues/searches?include=creator&include=issueType',
       params: {
         page: page,
-        pageSize: nbItems
+        pageSize: nbItems,
+        sort:'-createdAt'
       },
       data: requestData
     })
@@ -78,7 +79,7 @@ angular.module('citizen-engagement').factory('IssueService', function($http, api
   return service;
 
 });
-angular.module('citizen-engagement').controller('ListCtrl', function(AuthService, $scope, $http, $state, apiUrl, IssueService) {
+angular.module('citizen-engagement').controller('ListCtrl', function(AuthService, $scope, $http, $state, apiUrl, IssueService, MessageService, $timeout) {
   var listCtrl = this;
   var page = 1;
   listCtrl.issues = [];
@@ -91,12 +92,19 @@ angular.module('citizen-engagement').controller('ListCtrl', function(AuthService
   listCtrl.listFilter = function(){
       listCtrl.issues = [];
       page = 0;
-      console.log(listCtrl.state);
       listCtrl.showMore();
   }
   $scope.$on('$ionicView.enter', function() {
-      IssueService.retrieveIssuesPage(page,listCtrl.state,listCtrl.search).then(function(res) {
-        listCtrl.issues = listCtrl.issues.concat(res.data);
+      IssueService.retrieveIssuesPage(page,listCtrl.state,listCtrl.search, listCtrl.nbItems).then(function(res) {
+
+        listCtrl.issues = res.data;
+        if(MessageService.msg){
+          listCtrl.success = MessageService.msg;
+          $timeout(function(){
+            listCtrl.success = null;
+            MessageService.unsetMsg();
+          }, 4500);
+        }
       });
    })
 });
@@ -116,7 +124,7 @@ angular.module('citizen-engagement').controller('IssueDetailCtrl', function ($sc
   })
 });
 
-angular.module('citizen-engagement').controller('NewIssueCtrl', function (qimgUrl, qimgSecret, $q, $ionicPopup, $scope, $http, apiUrl, geolocation, $state, $log, $ionicLoading, CameraService){
+angular.module('citizen-engagement').controller('NewIssueCtrl', function (qimgUrl, qimgSecret, $q, $ionicPopup, $scope, $http, apiUrl, geolocation, $state, $log, $ionicLoading, CameraService, MessageService){
   var newIssueCtrl = this;
   newIssueCtrl.messages = [];
   $scope.$on('$ionicView.enter', function(){
@@ -158,7 +166,6 @@ angular.module('citizen-engagement').controller('NewIssueCtrl', function (qimgUr
       template: 'Creating issue...',
     });
     if (!newIssueCtrl.pictureData) {
-    newIssueCtrl.messages.push("No picture");
       // If no image was taken, return a promise resolved with "null"
       return $q.when(null);
     }
@@ -213,6 +220,7 @@ angular.module('citizen-engagement').controller('NewIssueCtrl', function (qimgUr
       $ionicLoading.hide();
       console.log(res);
       var issueCreated = res.data;
+      MessageService.transferMsg('Issue créée avec succès !');
       $state.go('tab.issueList');
     }).catch(function(err){
         $log.error('Could not create the issue because ' + err.message);

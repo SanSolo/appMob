@@ -12,7 +12,7 @@
       <h2>Type: {{issueDetailCtrl.issue.issueType.name}} - {{issueDetailCtrl.issue.issueType.description}}</h2>
       <p class="descriptionIssue">Description: {{issueDetailCtrl.issue.description}}</p>
       <p>Créateur: {{issueDetailCtrl.issue.creator.name}}</p>
-      <p>Date: {{issueDetailCtrl.issue.createdAt}}</p>
+      <p>Date: {{issueDetailCtrl.issue.createdAt | date :'EEE dd.MM.yyyy'}}</p>
       <p>Etat: {{issueDetailCtrl.issue.state}}</p>
       <p>Tags: <span ng-repeat="tag in issueDetailCtrl.issue.tags"><span class=tagsIssue>{{tag}}</span></span></p>
       <p><a ui-sref='tab.comment({ issueId: issueDetailCtrl.issue.id })'>Voir les commentaires</a></p>

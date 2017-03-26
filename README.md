@@ -1,7 +1,7 @@
 # citizen-engagement
 ## Synopsis
 For a better understanding of the app, please read this document:
-[citizen-engagement guide](citizen-engagement/hooks/explicationAppMob.pdf "Citizen-engagement Guide")
+[citizen-engagement guide](https://github.com/SanSolo/citizen-engagement/blob/master/hooks/explicationAppMob.pdf "Citizen-engagement Guide")
 
 **Note:** This project uses Ionic V1 & AngularJs
 

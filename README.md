@@ -21,4 +21,4 @@ Currently the app is under beta. Following actions can be made:
 - A citizen is able to report an issue at a specific location, optionally with a picture
 - A citizen is able to see what issues there are in a map of the area, and the details of those issues (picture, description, state, etc)
 - A citizen is able to use filters or a search to see only some issues (on the map and/or in other screens);
-- Citizens are able to post comments on issues, and the list of comments for an issue must be visible somewhere in the app
+- Citizens are able to post comments on issues, and the list of comments for an issue is visible in issue's details page

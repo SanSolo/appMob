@@ -1,12 +1,11 @@
-<ion-view view-title="Issue details">
+<ion-view view-title="Commentaires">
 
   <ion-nav-buttons side="secondary">
-    <button type="button" ng-controller="LogoutCtrl as logoutCtrl" ng-click="logoutCtrl.logOut()" class="button">Filtre</button>
     <button type="button" ng-controller="LogoutCtrl as logoutCtrl" ng-click="logoutCtrl.logOut()" class="button">Log Out</button>
   </ion-nav-buttons>
 
   <ion-content>
-    <h4>Commentaires <span class="badge badge-positive">{{commentsCtrl.nbComments}}</span></h4>
+    <h4>Commentaires <span class="badge badge-assertive">{{commentsCtrl.nbComments}}</span></h4>
     <div class="list card">
 
   <div ng-repeat="comment in commentsCtrl.comments" class="item item-body padding">
@@ -31,13 +30,13 @@
         <span class="input-label">Poster un commentaire</span>
           <textarea placeholder="Comments" ng-model="commentsCtrl.text" required ></textarea>
       </label>
-      <button class="button button-full button-positive" ng-click="commentsCtrl.create()" ng-disabled="addCommentForm.$invalid">Commenter</button>
+      <button class="button button-full button-dark" ng-click="commentsCtrl.create()" ng-disabled="addCommentForm.$invalid">Commenter</button>
     </div>
   </form>
   </div>
 
 </div>
-<button class="button button-full button-positive" ng-click="commentsCtrl.showMore()">
+<button class="button button-full button-dark" ng-click="commentsCtrl.showMore()">
   Show More
 </button>
   </ion-content>

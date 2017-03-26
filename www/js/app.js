@@ -178,7 +178,7 @@ angular.module('citizen-engagement').run(function(AuthService, $rootScope, $stat
   $rootScope.$on('$stateChangeStart', function(event, toState) {
 
     // If the user is not logged in and is trying to access another state than "login"...
-    if (!AuthService.authToken && !(toState.name == 'login' || toState.name == 'register')) {
+    if (!AuthService.authToken && !(toState.name == 'login' || toState.name == 'signin')) {
 
       // ... then cancel the transition and go to the "login" state instead.
       event.preventDefault();

@@ -1,7 +1,7 @@
 # citizen-engagement
 ## Synopsis
-For a better understanding of the app, please read this document: 
-[citizen-engagement guide](https://www.google.com "Citizen-engagement Guide")
+For a better understanding of the app, please read this document:
+[citizen-engagement guide](citizen-engagement/hooks/explicationAppMob.pdf "Citizen-engagement Guide")
 
 **Note:** This project uses Ionic V1 & AngularJs
 
@@ -9,8 +9,8 @@ For a better understanding of the app, please read this document:
 ## API Reference
 
 The app ineracts with two API's
-[Citizen Engagement API documentation](https://mediacomem.github.io/comem-citizen-engagement-api/)
-[Qimg API documentation](https://mediacomem.github.io/comem-qimg/)
+- [Citizen Engagement API documentation](https://mediacomem.github.io/comem-citizen-engagement-api/)
+- [Qimg API documentation](https://mediacomem.github.io/comem-qimg/)
 
 
 ## Version

@@ -1,16 +1,6 @@
-// angular.module('citizen-engagement').controller('MyCtrl', function(geolocation, $log) {
-//   var myCtrl = this;
-//   geolocation.getLocation().then(function(data){
-//     myCtrl.latitude = data.coords.latitude;
-//     myCtrl.longitude = data.coords.longitude;
-//   }).catch(function(err) {
-//     $log.error('Could not get location because: ' + err.message);
-//   });
-// });
 angular.module('citizen-engagement').controller('MapCtrl', function(geolocation, $log, mapboxSecret, IssueService, $scope, leafletData, $state) {
   var mapCtrl = this;
-
-//dans le controller de new issue--> mettre le code suivant, mais il faut changer le nom et le center est pour centrer la carte à choisir si on le met ou pas
+  // Marker personnalisé, fonctionne pas sur mobile
   geolocation.getLocation().then(function(data){
     mapCtrl.center.lat = data.coords.latitude;
     mapCtrl.center.lng = data.coords.longitude;
@@ -23,24 +13,8 @@ angular.module('citizen-engagement').controller('MapCtrl', function(geolocation,
     mapCtrl.markers.push({
       lat: data.coords.latitude,
       lng: data.coords.longitude,
-      icon: mapCtrl.icones
     });
     var page = 1;
-    /*IssueService.retrieveIssuesPage(page).then(function(res) {
-      createMarkers(res.data);
-    });
-    function createMarkers (issues) {
-        console.log(issues);
-        for(var i=0; i<issues.length; i++){
-          mapCtrl.markers.push({
-            lat: issues[i].location.coordinates[1],
-            lng: issues[i].location.coordinates[0],
-            issue: issues[i],
-            message: '<p>'+ issues[i].issueType.name + '</p><p> ' + issues[i].issueType.description +'</p>'
-          });
-        }
-      }*/
-
   }).catch(function(err) {
     $log.error('Could not get location because: ' + err.message);
   });
@@ -63,7 +37,7 @@ mapboxTileLayerUrl = mapboxTileLayerUrl + '?access_token=' + mapboxAccessToken;
     zoom: 14
   };
 
-
+  // A chaque fois que la map est drag
   $scope.$on('leafletDirectiveMap.dragend', function(event, map){
     console.log('Map was dragged');
     console.log(map);
@@ -83,6 +57,7 @@ mapboxTileLayerUrl = mapboxTileLayerUrl + '?access_token=' + mapboxAccessToken;
       // retourne la distance convertie en de KM en radian
       return mapDistance / 6378.1;
     }).then(function(radius){
+      // Recherche les issues se trouvant à cette position et contenu dans le rayon calculé
       IssueService.retriveIssuesLocation(mapCtrl.center, radius).then(function(res){
         console.log(res.data);
         createMarkers(res.data);
@@ -90,6 +65,7 @@ mapboxTileLayerUrl = mapboxTileLayerUrl + '?access_token=' + mapboxAccessToken;
     })
 
   });
+  // Crée et ajotue les markers à la map
   function createMarkers (issues) {
     console.log(issues);
       mapCtrl.markers = [];
@@ -102,7 +78,9 @@ mapboxTileLayerUrl = mapboxTileLayerUrl + '?access_token=' + mapboxAccessToken;
         });
       }
     }
+  // Quand on clique sur un marker
   $scope.$on('leafletDirectiveMarker.click', function(event, marker) {
+    // Si le marker est le marker d'une issue et non notre position actuelle
     if(marker.model.issue){
       $state.go('tab.issueDetailsMap', {issueId: marker.model.issue.id});
     }

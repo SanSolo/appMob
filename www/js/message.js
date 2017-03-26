@@ -1,3 +1,8 @@
+/*
+* message.js
+* Service: MessageService
+* Gère notamment: l'envoie de message
+*/
 angular.module('citizen-engagement').factory('MessageService', function() {
 
   var service = {};

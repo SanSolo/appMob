@@ -57,7 +57,7 @@ angular.module('citizen-engagement').config(function($stateProvider, $urlRouterP
         }
       }
     })
-
+    // Tab - Map
     .state('tab.issueMap', {
       url: '/issueMap',
       views: {
@@ -68,7 +68,7 @@ angular.module('citizen-engagement').config(function($stateProvider, $urlRouterP
         }
       }
     })
-
+    // Liste d'issue
     .state('tab.issueList', {
       url: '/issueList',
       views: {
@@ -79,7 +79,7 @@ angular.module('citizen-engagement').config(function($stateProvider, $urlRouterP
         }
       }
     })
-
+    // Tab - Les commentaires d'une issue
     .state('tab.comment', {
       url: '/issueDetails/:issueId/comments',
       views: {
@@ -106,7 +106,7 @@ angular.module('citizen-engagement').config(function($stateProvider, $urlRouterP
         }
       }
     })
-
+    // Tab - Détails d'une issue en venant de la map
     .state('tab.issueDetailsMap', {
       // We use a parameterized route for this state.
       // That way we'll know which issue to display the details of.
@@ -123,7 +123,7 @@ angular.module('citizen-engagement').config(function($stateProvider, $urlRouterP
               }}
 
     })
-
+    // Formulaire d'inscription
     .state('signin', {
       url: '/signin',
       controller: 'LoginCtrl',
@@ -131,7 +131,7 @@ angular.module('citizen-engagement').config(function($stateProvider, $urlRouterP
       templateUrl: 'templates/signin.html'
     })
 
-
+    // Formulaire de connexion
     .state('login', {
       url: '/login',
       controller: 'LoginCtrl',
@@ -144,7 +144,7 @@ angular.module('citizen-engagement').config(function($stateProvider, $urlRouterP
 
   // Define the default state (i.e. the first screen displayed when the app opens).
   $urlRouterProvider.otherwise(function($injector) {
-    $injector.get('$state').go('tab.issueMap'); // Go to the new issue tab by default.
+    $injector.get('$state').go('tab.newIssue'); // Go to the new issue tab by default.
   });
 });
 

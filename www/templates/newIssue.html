@@ -19,7 +19,7 @@
         <div class="col"><img width=100% [height]="imgHeight" src="img/logoCC.png"></div>
         <div class="col"></div>
       </div>
-
+<form name="newIssueForm">
   <div class="item item-body newIssue">
     <img ng-if='newIssueCtrl.pictureData' width='100%' ng-src='data:image/png;base64,{{ newIssueCtrl.pictureData }}' />
     <div class="button-bar button-dark row">
@@ -43,13 +43,13 @@
     </div>
 
       <label class="item item-input">
-        <textarea class="descriptionNewIssue" ng-model="newIssueCtrl.issue.description" placeholder="Description"></textarea>
+        <textarea class="descriptionNewIssue" ng-model="newIssueCtrl.issue.description" placeholder="Description" required ></textarea>
       </label>
       <label class="item item-input tags">
-        <input ng-model="newIssueCtrl.issue.tags" type="text" placeholder="Tags">
+        <input ng-model="newIssueCtrl.issue.tags" type="text" placeholder="Tags, separate each with a ','" required >
       </label>
-      <button type="button" ng-click="newIssueCtrl.create()" class="button">Suivant</button>
-
+      <button type="button" ng-click="newIssueCtrl.create()" ng-disabled="newIssueForm.$invalid" class="button">Créer</button>
+</form>
 
     </div>
   </div>

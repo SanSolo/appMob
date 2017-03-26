@@ -1,4 +1,11 @@
 
+/*
+* Auth.js
+* Controllers: LoginCtrl, LogoutCtrl
+* Gère notamment: La connexion, Le déconnexion et l'inscription
+*/
+
+// Login Controller
 angular.module('citizen-engagement').controller('LoginCtrl', function(apiUrl, MessageService, AuthService, $http, $ionicHistory, $ionicLoading, $scope, $state) {
   var loginCtrl = this;
 
@@ -7,12 +14,13 @@ angular.module('citizen-engagement').controller('LoginCtrl', function(apiUrl, Me
     // Re-initialize the user object every time the screen is displayed.
     // The first name and last name will be automatically filled from the form thanks to AngularJS's two-way binding.
     loginCtrl.user = {};
+    // Si un message de création de compte est envoyé. L'afficher.
     if(MessageService.msg){
       loginCtrl.message = MessageService.msg;
     }
   });
 
-  // Add the register function to the scope.
+  // Add the login function to the scope.
   loginCtrl.logIn = function() {
 
     // Forget the previous error (if any).
@@ -54,6 +62,7 @@ angular.module('citizen-engagement').controller('LoginCtrl', function(apiUrl, Me
       loginCtrl.error = 'Could not log in.';
     });
   };
+  // Add the register function to the scope
   loginCtrl.register = function () {
 
       loginCtrl.user.roles = ['citizen'];
@@ -73,8 +82,9 @@ angular.module('citizen-engagement').controller('LoginCtrl', function(apiUrl, Me
           disableBack: true,
           historyRoot: true
       });
-        // Go to the login creation tab.
+        // Envoie d'un message de succès
         MessageService.transferMsg('Compte créé. Vous pouvez vous connecter avec les identifiants renseignés');
+        // Go to the login tab.
         $state.go('login');
   }).catch(function() {
 
@@ -85,7 +95,9 @@ angular.module('citizen-engagement').controller('LoginCtrl', function(apiUrl, Me
 };
 });
 
-
+/* Service - AuthService
+* Permet de fournir le token d'identification sur chaque requête HTTP
+*/
 angular.module('citizen-engagement').factory('AuthInterceptor', function(AuthService) {
   return {
 
@@ -103,7 +115,9 @@ angular.module('citizen-engagement').factory('AuthInterceptor', function(AuthSer
   };
 });
 
-
+/*
+* LogoutCtrl - Gère la déconnexion
+*/
 angular.module('citizen-engagement').controller('LogoutCtrl', function(AuthService, $state) {
   var logoutCtrl = this;
 

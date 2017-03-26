@@ -1,3 +1,15 @@
+/*
+* issues.js
+* Controllers: ListCtrl, NewIssueCtrl, issueDetailCtrl
+* Services: CameraService, IssueService
+* Gère notamment: Listing des issues, l'ajout d'une issue, le listing des détails d'une issue
+*/
+
+/*
+* Service - CameraService
+* isSupported() - Permet controler que le device est équipé d'une camera
+* getPicture() - Permet de prendre une photo
+*/
 angular.module('citizen-engagement').factory('CameraService', function($q) {
   var service = {
     isSupported: function() {
@@ -20,9 +32,20 @@ angular.module('citizen-engagement').factory('CameraService', function($q) {
   return service;
 });
 
+/*
+* Service - IssueService
+* retrieveIssuesPage() - retourne une liste d'issues paginée
+* retriveIssuesLocation() - retourne une liste d'issues en fonction d'une localisation
+*/
 angular.module('citizen-engagement').factory('IssueService', function($http, apiUrl) {
   var service = {};
-
+  /*
+  * Retournes liste d'issues
+  * page - le numéro de la page à retourner
+  * state - l'état des issues à retourner
+  * search - la recherche dans les descriptions des issues à retourner
+  * nbItems - le nombre d'issue à retourner
+  */
   service.retrieveIssuesPage = function(page, state, search, nbItems) {
     page = page || 1; // Start from page 1
     nbItems = nbItems || 20;
@@ -48,7 +71,11 @@ angular.module('citizen-engagement').factory('IssueService', function($http, api
       data: requestData
     })
   };
-
+  /*
+  * Retourne liste d'issues
+  * location - Objet contenant la latitute et longitute du centre de recherche
+  * radius - Le rayon en radian de recherche autour du centre
+  */
   service.retriveIssuesLocation = function (location, radius){
     console.log(location);
     var page =1;
@@ -79,25 +106,33 @@ angular.module('citizen-engagement').factory('IssueService', function($http, api
   return service;
 
 });
+
+/*
+* ListCtrl - Gère le listing des issues
+*/
 angular.module('citizen-engagement').controller('ListCtrl', function(AuthService, $scope, $http, $state, apiUrl, IssueService, MessageService, $timeout) {
   var listCtrl = this;
   var page = 1;
   listCtrl.issues = [];
+  // Cherche les isssues de la page suivante et les ajoute à la liste actuelle
   listCtrl.showMore = function() {
     page = page + 1;
     IssueService.retrieveIssuesPage(page,listCtrl.state,listCtrl.search, listCtrl.nbItems).then(function(res) {
       listCtrl.issues = listCtrl.issues.concat(res.data);
     });
   }
+  // Filtre les issues en fonction de leur état
   listCtrl.listFilter = function(){
       listCtrl.issues = [];
       page = 0;
       listCtrl.showMore();
   }
+  // A chaque fois que la view est ouverte, on recherche les issues
   $scope.$on('$ionicView.enter', function() {
       IssueService.retrieveIssuesPage(page,listCtrl.state,listCtrl.search, listCtrl.nbItems).then(function(res) {
 
         listCtrl.issues = res.data;
+        // Si message de succès présent
         if(MessageService.msg){
           listCtrl.success = MessageService.msg;
           $timeout(function(){
@@ -109,6 +144,9 @@ angular.module('citizen-engagement').controller('ListCtrl', function(AuthService
    })
 });
 
+/*
+* IssueDetailCtrl - Gère l'affichage des informations des détails d'une issue
+*/
 angular.module('citizen-engagement').controller('IssueDetailCtrl', function ($scope, $state, $http, apiUrl, $stateParams, CommentsService) {
   var issueDetailCtrl = this;
 
@@ -124,6 +162,9 @@ angular.module('citizen-engagement').controller('IssueDetailCtrl', function ($sc
   })
 });
 
+/*
+* NewIssueCtrl - Gère la création d'une issue
+*/
 angular.module('citizen-engagement').controller('NewIssueCtrl', function (qimgUrl, qimgSecret, $q, $ionicPopup, $scope, $http, apiUrl, geolocation, $state, $log, $ionicLoading, CameraService, MessageService){
   var newIssueCtrl = this;
   newIssueCtrl.messages = [];
@@ -136,7 +177,7 @@ angular.module('citizen-engagement').controller('NewIssueCtrl', function (qimgUr
       console.log(newIssueCtrl.issueTypes);
     });
   });
-
+  // Gère la prise de photo avec la camera
   newIssueCtrl.takePicture = function() {
     var isOK = CameraService.isSupported();
     if (isOK == true) {
@@ -161,6 +202,7 @@ angular.module('citizen-engagement').controller('NewIssueCtrl', function (qimgUr
     });
     console.log(postIssue);
   };
+  // Héberge l'image auprès de l'API qimg
   function postImage() {
     $ionicLoading.show({
       template: 'Creating issue...',
@@ -182,6 +224,7 @@ angular.module('citizen-engagement').controller('NewIssueCtrl', function (qimgUr
       }
     });
   }
+  // Enregistre l'issue
   function postIssue(imageRes) {
    // Use the image URL from the qimg API response (if any)
    if (imageRes) {
